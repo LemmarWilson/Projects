@@ -14,11 +14,13 @@ crispy_forms_filters %} {% block content %}
           {{ form|crispy }}
           <div class="form-group"></div>
           <button class="btn btn-outline-info" type="submit">Sign Up</button>
-          <h3 class="text-muted">
-            Already Have An Account?
-            <a class="btn btn-outline-info" href="{% url 'login'}">Sign In</a>
-          </h3>
         </form>
+        <div class=" section-featured">
+          <div class="cta-text">
+            Already Have An Account?
+            <a class="btn btn-outline-info" href="{% url 'login' %}">Sign In</a>
+          </div>
+        </div>
       </div>
       <div
         class="cta-img-box"

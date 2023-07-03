@@ -10,17 +10,14 @@ crispy_forms_filters %} {% block content %}
           well today. You can cancel or pause anytime. And the first meal is on
           us!
         </p>
-        <form class="cta-form" action="#">
+        <form method="post" class="cta-form" name="sign-up">
+          {% csrf_token %}
           {{ form|crispy }}
-          <div class="form-group"></div>
-          <button class="btn btn-outline-info" type="submit">Sign Up</button>
+          <!-- <div>
+            <label for="select-where">Where did you hear from us?</label>
+          </div> -->
+          <button class="btn btn--form">Sign up now</button>
         </form>
-        <div class=" section-featured">
-          <div class="cta-text">
-            Already Have An Account?
-            <a class="btn btn-outline-info" href="{% url 'login' %}">Sign In</a>
-          </div>
-        </div>
       </div>
       <div
         class="cta-img-box"
@@ -31,3 +28,12 @@ crispy_forms_filters %} {% block content %}
   </div>
 </section>
 {% endblock content%}
+
+<select id="select-where" name="select-where" required>
+  <option value="">Please choose one option:</option>
+  <option value="friends">Friends and family</option>
+  <option value="youtube">YouTube video</option>
+  <option value="podcast">Podcast</option>
+  <option value="ad">Facebook ad</option>
+  <option value="others">Others</option>
+</select>

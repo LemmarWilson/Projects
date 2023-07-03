@@ -7,11 +7,18 @@ crispy_forms_filters %} {% block content %}
         <div class="section-cta cta-text">
           <form class="cta-form" action="#">
             {{ form|crispy }}
-            <div class="form-group"></div>
+            <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Login</button>
+            </div>
           </form>
-          <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Login</button>
-          </div>
+        </div>
+        <div class="border-top pt-3">
+          <small class="cta-text">
+            Need An Account?
+            <a class="ml-3 btn btn-outline-info" href="{% url 'register' %}"
+              >Sign Up</a
+            >
+          </small>
         </div>
       </div>
       <div

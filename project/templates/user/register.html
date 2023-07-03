@@ -10,14 +10,29 @@ crispy_forms_filters %} {% block content %}
           well today. You can cancel or pause anytime. And the first meal is on
           us!
         </p>
-        <form method="post" class="cta-form" name="sign-up">
-          {% csrf_token %}
-          {{ form|crispy }}
-          <!-- <div>
-            <label for="select-where">Where did you hear from us?</label>
-          </div> -->
-          <button class="btn btn--form">Sign up now</button>
-        </form>
+        <div class="content-section">
+          <form method="POST" class="cta-form" name="sign-up">
+            {% csrf_token %} {{ form|crispy }}
+
+            <!-- <div>
+              <label for="select-where">Where did you hear from us?</label>
+            </div> -->
+            <div class="form-group">
+              <button class="btn btn--outline-info" type="submit">
+                Sign up now
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="border-top pt-3">
+          <small class="cta-text">
+            Already Have An Account?
+            <a class="ml-3 btn btn-outline-info" href="{% url 'login' %}"
+              >Sign In</a
+            >
+          </small>
+        </div>
       </div>
       <div
         class="cta-img-box"

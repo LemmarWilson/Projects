@@ -1,33 +1,12 @@
-{% extends "base.html" %}
-{% load static %}
-{% load crispy_forms_tags %}
-{% load crispy_forms_filters %}
-{% block content %}
-  <div class="section-cta cta-text">
-    <form class="cta-form" action="#">
-      {% csrf_token %}
-      <fieldset class="form-group">
-        <legend class="border-bottom mb-4">Sign Up</legend>
-        {{ form|crispy }}
-      </fieldset>
-      <div class="form-group">
-        <p> <button class="btn btn-outline-info" type="submit"> Login</button> </p>
-      </div>
-    </form>
-  </div>
-
-  
-  {% endblock content %}
-
-
+{% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} {% load
+crispy_forms_filters %} {% block content %}
+<div class="section-cta cta-text">
   <form class="cta-form" action="#">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Sign Up</legend>
-      {{ form|crispy }}
-    </fieldset>
-    <div class="form-group">
-      <button class="btn btn-outline-info" type="submit">Login</button>
-    </div>
+    {{ form|crispy }}
+    <div class="form-group"></div>
   </form>
-<
+  <div class="form-group">
+    <button class="btn btn-outline-info" type="submit">Login</button>
+  </div>
+</div>
+{% endblock content %}

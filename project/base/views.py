@@ -9,3 +9,5 @@ def home (request):
     }
     return render(request,'home.html',context)
 
+def recipes(request):
+    return render(request,'recipes_home.html')

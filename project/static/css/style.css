@@ -504,11 +504,10 @@
 /**************************/
 /* CTA SECTION */
 /**************************/
-
 .section-cta {
   /* top / right / bottom / left */
   /* padding: 9.6rem 0 12.8rem 0; */
-
+  
   /* top / horizontal / left */
   padding: 4.8rem 0 12.8rem;
 }
@@ -520,7 +519,7 @@
   /* background-color: #e67e22; */
   box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.15);
   border-radius: 11px;
-
+  
   background-image: linear-gradient(to right bottom, #eb984e, #e67e22);
   overflow: hidden;
 }

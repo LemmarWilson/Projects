@@ -1,44 +1,38 @@
 {% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} {% load
 crispy_forms_filters %} {% block content %}
-<div class="section-cta ">
+<div class="section-profile">
   <div class="container">
-    <div class="cta">
-      <div class="cta-text-box ">
-        <div class="content-section ">
-          <div class="media">
-            <img
-              class="rounded-circle account-img"
-              src="{{ user.profile.image.url }}"
-            />
-            <div class="media-body">
-              <h2 class="account-heading">{{ user.username }}</h2>
-              <p class="text-secondary">{{ user.email }}</p>
-            </div>
-          </div>
-          <!-- FORM HERE -->
-          <div class="">
-            <form method="POST" class="cta-form " enctype="multipart/form-data">
-              {% csrf_token %}
-              <div class="cta-text-box">
-                <legend class="border-bottom mb-4">Profile Info</legend>
-                {{ u_form|crispy }} {{ p_form|crispy }}
-              </div>
-
-              <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">
-                  Update
-                </button>
-              </div>
-            </form>
+    <div class="profile">
+    <div class="profile-text-box">
+      <div class="content-section">
+        <div class="media">
+          <img
+            class="round-circle account-img"
+            src="{{ user.profile.image.url }}"
+          />
+          <div class="media-body">
+            <h2 class="heading-secondary">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
           </div>
         </div>
+        <!-- FORM HERE -->
+        <div class="content-section">
+          <form method="POST" class="profile-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile-text-box">
+              <legend class="border-bottom mb-4">Profile Info</legend>
+              {{ u_form|crispy }} {{ p_form|crispy }}
+            </div>
+
+            <div class="form-group">
+              <button class="btn btn-outline-info" type="submit">Update</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div
-        class="cta-img-box"
-        role="img"
-        aria-label="Woman enjoying food"
-      ></div>
     </div>
+    <div class="profile-img-box" role="img" aria-label="coktail"></div>
+  </div>
   </div>
 </div>
 {% endblock content %}

@@ -8,3 +8,4 @@ def home (request):
         'posts': Post.objects.all()
     }
     return render(request,'home.html',context)
+

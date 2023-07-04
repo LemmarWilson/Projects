@@ -12,7 +12,9 @@ crispy_forms_filters %} {% block content %}
         </p>
         <div class="content-section">
           <form method="POST" class="cta-form" name="sign-up">
-            {% csrf_token %} {{ form|crispy }}
+            {% csrf_token %}
+            
+            {{ form|crispy }}
 
             <!-- <div>
               <label for="select-where">Where did you hear from us?</label>

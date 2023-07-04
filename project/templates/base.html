@@ -40,16 +40,24 @@
       </a>
 
       <nav class="main-nav">
+        {% if user.isauthenticated %}
+        <ul class="main-nav-list">
+          <li><a class="main-nav-link" href="{% url 'profile' %}">Profile</a></li>
+          <li><a class="main-nav-link" href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+
+        {% else %}
         <ul class="main-nav-list">
           <li><a class="main-nav-link" href="#">How it works</a></li>
           <li><a class="main-nav-link" href="#">Meals</a></li>
           <li><a class="main-nav-link" href="#">Testimonials</a></li>
-          <li><a class="main-nav-link" href="#">Pricing</a></li>
+          <li><a class="main-nav-link" href="{% url 'login' %}">Login</a></li>
           <li>
             <a class="main-nav-link nav-cta" href="{% url 'register' %}"
               >Try for free</a
             >
           </li>
+          {% endif %}
         </ul>
       </nav>
     </header>

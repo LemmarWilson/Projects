@@ -5,7 +5,9 @@ crispy_forms_filters %} {% block content %}
     <div class="cta">
       <div class="cta-text-box">
         <div class="section-cta cta-text">
-          <form class="cta-form" action="#">
+          <form class="cta-form" method="POST">
+            {% csrf_token %}
+            
             {{ form|crispy }}
             <div class="form-group">
               <button class="btn btn-outline-info" type="submit">Login</button>

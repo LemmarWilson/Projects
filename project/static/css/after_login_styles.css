@@ -26,16 +26,16 @@
   color: #45260a;
 }
 
-.profile .heading-secondary {
+.profile .heading-secondary{
   /* color: #45260a; */
   color: inherit;
-  margin-bottom: 3.2rem;
+  margin-bottom: 1rem;
 }
 
 .profile-text {
   font-size: 1.8rem;
-  line-height: 1.8;
-  margin-bottom: 4.8rem;
+  line-height: 1.8rem;
+  margin-bottom: -2rem;
 }
 
 /* .profile-img-box {
@@ -58,7 +58,8 @@
   background-size: cover;
   background-position: center;
   max-width: 100%;
-  height: auto;
+  height: 100%;
+  width: 50rem;
 }
 
 .profile-form {
@@ -68,6 +69,7 @@
   row-gap: 2.4rem;
   justify-content: start;
   align-items: end;
+  flex-wrap: wrap;
 }
 
 .profile-form label {
@@ -100,5 +102,10 @@
 }
 .round-circle{
   width: 30rem;
-  border-radius: 18%;
+  border-radius: 10rem;
+  box-shadow: 0rem 0rem 1rem 1rem rgba(0, 0, 0, 0.15);
 }
+
+/**************************/
+/* MEALS SECTION */
+/**************************/

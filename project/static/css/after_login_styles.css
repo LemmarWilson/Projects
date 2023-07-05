@@ -1,3 +1,29 @@
+.header1 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #fdf2e9;
+
+  /* Because we want header to be sticky later */
+  height: 9.6rem;
+  padding: 0 4.8rem;
+  position: relative;
+  margin-bottom: -8rem;
+  margin-top: -2rem;
+  color: #888;
+}
+.logout--header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fdf2e9;
+
+  /* Because we want header to be sticky later */
+  height: 9.6rem;
+  padding: 0 4.8rem;
+  position: relative;
+  margin-bottom: -2rem;
+}
 /**************************/
 /* PROFILE SECTION */
 /**************************/
@@ -62,6 +88,34 @@
   width: 50rem;
 }
 
+.login-img-box {
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(235, 151, 78, 0.35),
+      rgba(230, 125, 34, 0.35)
+    ),
+    url("../img/fruit1.jpg");
+  background-size: cover;
+  background-position: center;
+  max-width: 100%;
+  height: 100%;
+  width: 50rem;
+}
+.register-img-box{
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(235, 151, 78, 0.35),
+      rgba(230, 125, 34, 0.35)
+    ),
+    url("../img/fruit2.jpg");
+  background-size: cover;
+  background-position: center;
+  max-width: 100%;
+  height: 100%;
+  width: 50rem;
+
+}
+
 .profile-form {
   display: flex;
   grid-template-columns: 1fr 1fr;
@@ -106,6 +160,45 @@
   box-shadow: 0rem 0rem 1rem 1rem rgba(0, 0, 0, 0.15);
 }
 
+.inquery{
+  display: flex;
+}
+.btn--fix{
+  background-color: #fae5d3;
+  color: #555;
+  margin: 4.3rem;
+
+}
+
+.selection-form{
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3.2rem;
+  justify-content: start;
+  align-items: end;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.selection-form select {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.8rem;
+  font-family: inherit;
+  color: inherit;
+  border: none;
+  background-color: #fdf2e9;
+  border-radius: 9px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.selection-form label {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+.extra--form{
+  margin-top: 3rem;
+}
 /**************************/
 /* MEALS SECTION */
 /**************************/

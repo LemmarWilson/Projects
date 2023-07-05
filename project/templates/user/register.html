@@ -20,37 +20,38 @@ crispy_forms_filters %} {% block content %}
               <label for="select-where">Where did you hear from us?</label>
             </div> -->
             <div class="form-group">
-              <button class="btn btn--outline-info" type="submit">
+              <button class="btn btn--form" type="submit">
                 Sign up now
               </button>
             </div>
           </form>
         </div>
-
+        
         <div class="border-top pt-3">
-          <small class="cta-text">
-            Already Have An Account?
-            <a class="ml-3 btn btn-outline-info" href="{% url 'login' %}"
-              >Sign In</a
-            >
-          </small>
+          <div class="selection-form">
+            <label for="select-where">Where did you hear from us?</label>
+            <select id="select-where">
+              <option value="">Optional : </option>
+              <option value="friends">Friends and family</option>
+              <option value="youtube">YouTube video</option>
+              <option value="podcast">Podcast</option>
+              <option value="ad">Facebook ad</option>
+              <option value="others">Others</option>
+            </select>
+            <div class="border-top pt-3" >
+              <small class="profile-text">Already Have An Account?
+                <a class="ml-3 btn btn--fix" href="{% url 'login' %}">Sign In</a>
+              </small>
+            </div>
+          </div>
         </div>
       </div>
       <div
-        class="cta-img-box"
-        role="img"
+      class="cta-img-box"
+      role="img"
         aria-label="Woman enjoying food"
       ></div>
     </div>
   </div>
 </section>
 {% endblock content%}
-
-<select id="select-where" name="select-where" required>
-  <option value="">Please choose one option:</option>
-  <option value="friends">Friends and family</option>
-  <option value="youtube">YouTube video</option>
-  <option value="podcast">Podcast</option>
-  <option value="ad">Facebook ad</option>
-  <option value="others">Others</option>
-</select>

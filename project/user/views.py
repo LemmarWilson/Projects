@@ -6,7 +6,7 @@ from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST, request.POST)
+        form = UserRegisterForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -15,7 +15,6 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'user/register.html', {'form': form})
-
 
 @login_required
 def profile(request):

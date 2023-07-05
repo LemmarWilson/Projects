@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} {% load
 crispy_forms_filters %} {% block content %}
-<section class="section-cta">
+<section class="profile-cta">
   <div class="container">
-    <div class="cta">
-      <div class="cta-text-box">
-        <div class="section-cta cta-text">
-          <form class="cta-form" method="POST">
+    <div class="profile">
+      <div class="profile-text-box">
+        <div class="section-profile profile-text">
+          <form class="profile-form" method="POST">
             {% csrf_token %}
             
             {{ form|crispy }}
@@ -15,16 +15,16 @@ crispy_forms_filters %} {% block content %}
           </form>
         </div>
         <div class="border-top pt-3">
-          <small class="cta-text">
+          <small class="profile-text">
             Need An Account?
-            <a class="ml-3 btn btn-outline-info" href="{% url 'register' %}"
+            <a class="ml-3 btn btn--fix" href="{% url 'register' %}"
               >Sign Up</a
             >
           </small>
         </div>
       </div>
       <div
-        class="cta-img-box"
+        class="login-img-box"
         role="img"
         aria-label="Woman enjoying food"
       ></div>

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .models import Post
 
 
@@ -9,5 +10,6 @@ def home (request):
     }
     return render(request,'home.html',context)
 
+@login_required
 def recipes(request):
     return render(request,'recipes_home.html')

@@ -64,7 +64,7 @@
   <body>
     {% if messages %}
       {% for message in messages %}
-        <div class="subheading header1 alert alert-{{ message.tags }}">{{ message }}</div>
+        <div class="header1 alert alert-{{ message.tags }}">{{ message }}</div>
       {% endfor %}
     {% endif %}
     {% block content%} 

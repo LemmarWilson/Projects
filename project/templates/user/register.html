@@ -1,5 +1,7 @@
-{% extends "base.html" %} {% load static %} {% load crispy_forms_tags %} {% load
-crispy_forms_filters %} {% block content %}
+{% extends "base.html" %}
+{% load static %} {% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% block content %}
 <section class="section-cta">
   <div class="container">
     <div class="cta">
@@ -13,7 +15,7 @@ crispy_forms_filters %} {% block content %}
         <div class="content-section">
           <form method="POST" class="cta-form" name="sign-up">
             {% csrf_token %}
-            
+
             {{ form|crispy }}
 
             <!-- <div>
@@ -55,3 +57,14 @@ crispy_forms_filters %} {% block content %}
   </div>
 </section>
 {% endblock content%}
+
+<form method="POST">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <legend class="border-bottom mb-4">Join Today</legend>
+    {{ form|crispy }}
+  </fieldset>
+  <div class="form-group">
+    <button class="btn btn-outline-info" type="submit">Sign Up</button>
+  </div>
+</form>

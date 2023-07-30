@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Map;
 
+
 public class PantryApp extends JFrame {
     // Fields
     private JPanel mainPanel = new JPanel(); // This will hold the buttons
@@ -27,6 +28,56 @@ public class PantryApp extends JFrame {
             displayText.append(item).append(": ").append(quantity).append("\n");
         }
         displayTextArea.setText(displayText.toString());
+    }
+
+    // Method to handle the "Search Pantry" functionality
+    private void searchPantry() {
+        // Clear the input panel from previous components
+        inputPanel.removeAll();
+
+        // Create input field for item name to search
+        JTextField itemNameField = new JTextField();
+
+        // Add the item name input field to the input panel
+        inputPanel.add(new JLabel("Item Name:"));
+        inputPanel.add(itemNameField);
+
+        // Show the pop-up dialog to get user input for searching
+        int option = JOptionPane.showConfirmDialog(this, inputPanel, "Search Pantry",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        // Process the user input (perform the search)
+        if (option == JOptionPane.OK_OPTION) {
+            String itemToSearch = itemNameField.getText();
+
+            // Get the quantity of the item from the pantry (if it exists)
+            int quantity = pantry.getItemQuantity(itemToSearch);
+
+            if (quantity >= 0) {
+                // Item found in the pantry
+                JOptionPane.showMessageDialog(this,
+                        "Item: " + itemToSearch + ", Quantity: " + quantity,
+                        "Pantry Search Result", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Item not found in the pantry
+                JOptionPane.showMessageDialog(this,
+                        "Item not found in the pantry.",
+                        "Pantry Search Result", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }
+
+    //Method to handle the Exit functionality
+    public void exit() {
+        // Show a confirmation dialog to the user asking if they want to exit the game
+        int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit the app?", "Exit", JOptionPane.YES_NO_OPTION);
+
+        // Check if the user selected "Yes" in the confirmation dialog
+        if (option == JOptionPane.YES_OPTION) {
+            // Exit the application with status code 0 (success)
+            System.exit(0);
+        }
+        
     }
 
 
@@ -115,6 +166,7 @@ public class PantryApp extends JFrame {
                 updateDisplayTextArea();
             }
         }
+        //Handle the "Remove/Update Item" button click
         else if (clickedButton.getText().equals("Remove/Update Item")) {
             // Clear the input panel from previous components
             inputPanel.removeAll();
@@ -161,6 +213,13 @@ public class PantryApp extends JFrame {
                 // Update the display in the text area
                 updateDisplayTextArea();
             }
+        }
+        //Handle to "Search Pantry" button click
+        else if (clickedButton.getText().equals("Search Pantry")) {
+            searchPantry();
+        }
+        else {
+            exit();
         }
     }
 

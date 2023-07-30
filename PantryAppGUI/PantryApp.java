@@ -11,12 +11,8 @@ public class PantryApp extends JFrame {
     private JPanel inputPanel; // This will hold the input components
     private JTextField itemField;
     private JTextField quantityField;
-    private JComboBox<QuantityType> quantityTypeComboBox;
-    private JTextField packsField; // Added for "PACKS" option
     private Pantry pantry;
     private JTextArea displayTextArea; //Area to display the contents of the HashMap in the text area
-
-    // Methods
 
     // Method to display the contents of the HashMap in the text area
     private void updateDisplayTextArea() {
@@ -93,20 +89,18 @@ public class PantryApp extends JFrame {
             // Create input fields for item name, quantity, and quantity type
             JTextField itemNameField = new JTextField();
             JTextField quantityField = new JTextField();
-            JComboBox<QuantityType> quantityTypeComboBox = new JComboBox<>(QuantityType.values());
+           
 
             // Update the class-level fields with the local variables
             this.itemField = itemNameField;
             this.quantityField = quantityField;
-            this.quantityTypeComboBox = quantityTypeComboBox;
+            
 
             // Add labels and input fields to the input panel
             inputPanel.add(new JLabel("Item Name:"));
             inputPanel.add(itemNameField);
             inputPanel.add(new JLabel("Quantity:"));
             inputPanel.add(quantityField);
-            inputPanel.add(new JLabel("Quantity Type:"));
-            inputPanel.add(quantityTypeComboBox);
 
             // Show the pop-up dialog to get user inputs
             int option = JOptionPane.showConfirmDialog(this, inputPanel, "Add Item",
@@ -127,89 +121,61 @@ public class PantryApp extends JFrame {
                     return;
                 }
 
-                // Get the selected quantity type from the combo box
-                QuantityType quantityType = (QuantityType) quantityTypeComboBox.getSelectedItem();
-
                 // Initialize packsText to null
                 String packsText = null;
 
-                // Check if the quantity type is "PACKS"
-                if (quantityType == QuantityType.PACKS) {
-                    // Create another text box for "How Many Packs"
-                    packsField = new JTextField();
-                    inputPanel.add(new JLabel("How Many Packs:"));
-                    inputPanel.add(packsField);
-
-                    // Show the pop-up dialog again to include the "How Many Packs" text box
-                    option = JOptionPane.showConfirmDialog(this, inputPanel, "Add Item", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-                    
-                    // Process the user input again with the new "How Many Packs" text box
-                    if (option == JOptionPane.OK_OPTION) {
-                        // Get the value from the "How Many Packs" text box
-                        packsText = packsField.getText();
-                    } else {
-                        // User canceled, so exit the method
-                        return;
-                    }
-                }
                 // Now you can use 'newItem', 'quantity', 'quantityType', and 'packsText' variables
                 // Add the item to the pantry or perform other operations
-                System.out.println("Adding item: " + newItem + ", Quantity: " + quantity + ", Quantity Type: " + quantityType + ", Packs: " + packsText);
+                System.out.println("Adding item: " + newItem + ", Quantity: " + quantity  + ", Packs: " + packsText);
                 
                 // Call the addItem method of the Pantry class
                 pantry.addItem(newItem, quantity);
 
-                // Call the updateItemQuantity method of the Pantry class (if needed)
-                if (quantityType != QuantityType.PACKS) {
-                    pantry.updateItemQuantity(newItem, quantity);
-                }
+                
                 updateDisplayTextArea();
             }
         }
-        //Handle the "Remove/Update Item" button click
+        // Handle the "Remove/Update Item" button click
         else if (clickedButton.getText().equals("Remove/Update Item")) {
             // Clear the input panel from previous components
             inputPanel.removeAll();
-    
+
             // Create input fields for item name and quantity to remove
             JTextField itemNameField = new JTextField();
             JTextField quantityToRemoveField = new JTextField();
-    
+
             // Update the class-level fields with the local variables
             this.itemField = itemNameField;
             this.quantityField = quantityToRemoveField;
-    
+
             // Add labels and input fields to the input panel
             inputPanel.add(new JLabel("Item Name:"));
             inputPanel.add(itemNameField);
-            inputPanel.add(new JLabel("Quantity to Remove:"));
+            inputPanel.add(new JLabel("Quantity to Remove/Update:"));
             inputPanel.add(quantityToRemoveField);
-    
+
             // Show the pop-up dialog to get user inputs
-            int option = JOptionPane.showConfirmDialog(this, inputPanel, "Remove Item",
-                    JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-    
+            int option = JOptionPane.showConfirmDialog(this, inputPanel, "Remove/Update Item",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
             // Process the user input (you can remove the item or update the quantity with it)
             if (option == JOptionPane.OK_OPTION) {
                 String itemToRemove = itemNameField.getText();
                 String quantityToRemoveText = quantityToRemoveField.getText();
-    
+
                 // Validate quantity input
                 int quantityToRemove = 0;
                 try {
                     quantityToRemove = Integer.parseInt(quantityToRemoveText);
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Invalid quantity. Please enter a valid number.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                        "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-    
-                // Get the selected quantity type from the combo box
-                QuantityType quantityTypeToRemove = (QuantityType) quantityTypeComboBox.getSelectedItem();
-    
-                // Remove the item or update the quantity based on the quantity type
-                pantry.removeItemOrQuantity(itemToRemove, quantityTypeToRemove, quantityToRemove);
-    
+
+                // Call the removeItemQuantity method of the Pantry class to remove the specified quantity
+                pantry.removeItemQuantity(itemToRemove, quantityToRemove);
+
                 // Update the display in the text area
                 updateDisplayTextArea();
             }
@@ -234,68 +200,67 @@ public class PantryApp extends JFrame {
         // Create an instance of the Pantry class
         pantry = new Pantry();
 
+        // Create the main panel with BorderLayout
+        mainPanel.setLayout(new BorderLayout());
+
         /*************/
         //  BUTTONS
         /************/
 
-        // Create the button panel and set its layout to FlowLayout (horizontal alignment)
-        mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10)); // 10px horizontal and vertical gaps
+        // Create a panel for the buttons and set its layout to FlowLayout with center alignment
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        // Building buttons
-        buttons = new JButton[4]; // Creating arrays of buttons
+        // Initialize the buttons array with the correct size
+        buttons = new JButton[4];
 
         // Add Item button
         buttons[0] = new JButton("Add Item");
-        mainPanel.add(buttons[0]); // Adding the button to the main panel
+        buttons[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ButtonClickHandler(e);
+            }
+        });
+        buttonPanel.add(buttons[0]);
 
         // Remove Item button
         buttons[1] = new JButton("Remove/Update Item");
-        mainPanel.add(buttons[1]); // Adding the button to the main panel
-
+        buttons[1].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ButtonClickHandler(e);
+            }
+        });
+        buttonPanel.add(buttons[1]);
 
         // Search button
         buttons[2] = new JButton("Search Pantry");
-        mainPanel.add(buttons[2]); // Adding the button to the main panel
+        buttons[2].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ButtonClickHandler(e);
+            }
+        });
+        buttonPanel.add(buttons[2]);
 
         // Exit button
         buttons[3] = new JButton("Exit");
-        mainPanel.add(buttons[3]); // Adding the button to the main panel
+        buttons[3].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ButtonClickHandler(e);
+            }
+        });
+        buttonPanel.add(buttons[3]);
 
-        // Adding an action listener to each button
-        for (int i = 0; i < buttons.length; i++) {
-            buttons[i].addActionListener(e -> ButtonClickHandler(e));
-        }
+        // Add the buttonPanel to the top of the mainPanel
+        mainPanel.add(buttonPanel, BorderLayout.NORTH);
+
 
         // Initialize the input panel
         inputPanel = new JPanel(new GridLayout(4, 2, 5, 5));
 
-        // Adding a ChangeListener to the quantityTypeComboBox
-        quantityTypeComboBox = new JComboBox<>(QuantityType.values());
-        quantityTypeComboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                // Get the selected quantity type from the combo box
-                QuantityType quantityType = (QuantityType) quantityTypeComboBox.getSelectedItem();
-                // Check if the quantity type is "PACKS"
-                if (quantityType == QuantityType.PACKS) {
-                    // Create the third text box for "How Many Packs" and add it to the input panel
-                    packsField = new JTextField();
-                    inputPanel.add(new JLabel("How Many Packs:"));
-                    inputPanel.add(packsField);
-                } 
-                else {
-                    // Remove the third text box from the input panel if quantity type is not "PACKS"
-                    if (packsField != null) {
-                        inputPanel.remove(new JLabel("How Many Packs:"));
-                        inputPanel.remove(packsField);
-                        packsField = null;
-                    }
-                }
-                // Revalidate the input panel to reflect the changes
-                inputPanel.revalidate();
-                inputPanel.repaint();
-            }
-        });
+        
 
         // Create and add the text area to the main panel
         displayTextArea = new JTextArea(10, 30);
@@ -308,7 +273,6 @@ public class PantryApp extends JFrame {
     
         // Add the combo box to the input panel
         inputPanel.add(new JLabel("Quantity Type:"));
-        inputPanel.add(quantityTypeComboBox);
 
         // Setting the title and the size of the window
         setTitle("Pantry App");

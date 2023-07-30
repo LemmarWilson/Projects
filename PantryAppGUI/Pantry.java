@@ -34,31 +34,28 @@ public class Pantry {
         return new HashMap<>(itemsMap); // Return a copy to prevent direct modifications to the original map
     }
     // Method to remove an item from the pantry or update its quantity
-    public void removeItemOrQuantity(String item, QuantityType quantityType, int quantityToRemove) {
+    public void removeItemQuantity(String item, int quantityToRemove) {
         int currentQuantity = itemsMap.getOrDefault(item, 0);
-        if (quantityType == QuantityType.PACKS) {
-            // For PACKS, simply remove the entire item from the pantry
-            itemsMap.remove(item);
-        } else {
-            // For other quantity types, subtract the specified quantity
-            if (currentQuantity <= 0) {
-                // Item doesn't exist or already has zero quantity, so no need to update
-                return;
-            }
+        // For other quantity types, subtract the specified quantity
+        if (currentQuantity <= 0) {
+            // Item doesn't exist or already has zero quantity, so no need to update
+            return;
+        }
 
-            if (quantityToRemove <= 0) {
-                // If no quantity specified, delete the entire item
+        if (quantityToRemove <= 0) {
+            // If no quantity specified, delete the entire item
+            itemsMap.remove(item);
+        }
+        else {
+            // Subtract the specified quantity from the current quantity
+            int newQuantity = currentQuantity - quantityToRemove;
+            if (newQuantity <= 0) {
+                // If the new quantity is zero or negative, remove the item from the pantry
                 itemsMap.remove(item);
-            } else {
-                // Subtract the specified quantity from the current quantity
-                int newQuantity = currentQuantity - quantityToRemove;
-                if (newQuantity <= 0) {
-                    // If the new quantity is zero or negative, remove the item from the pantry
-                    itemsMap.remove(item);
-                } else {
-                    // Update the quantity in the pantry
-                    itemsMap.put(item, newQuantity);
-                }
+            }
+            else {
+                // Update the quantity in the pantry
+                itemsMap.put(item, newQuantity);
             }
         }
     }

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% load static %} {% load crispy_forms_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
 {% load crispy_forms_filters %}
 {% block content %}
 <section class="section-cta">
@@ -15,56 +16,23 @@
         <div class="content-section">
           <form method="POST" class="cta-form" name="sign-up">
             {% csrf_token %}
-
             {{ form|crispy }}
-
-            <!-- <div>
-              <label for="select-where">Where did you hear from us?</label>
-            </div> -->
             <div class="form-group">
-              <button class="btn btn--form" type="submit">
-                Sign up now
-              </button>
+              <button class="btn btn--form" type="submit">Sign up now</button>
             </div>
           </form>
         </div>
-        
-        <div class="border-top pt-3">
-          <div class="selection-form">
-            <label for="select-where">Where did you hear from us?</label>
-            <select id="select-where">
-              <option value="">Optional : </option>
-              <option value="friends">Friends and family</option>
-              <option value="youtube">YouTube video</option>
-              <option value="podcast">Podcast</option>
-              <option value="ad">Facebook ad</option>
-              <option value="others">Others</option>
-            </select>
-            <div class="border-top pt-3" >
-              <small class="profile-text">Already Have An Account?
-                <a class="ml-3 btn btn--fix" href="{% url 'login' %}">Sign In</a>
-              </small>
-            </div>
-          </div>
+        <div class="profile-text">
+          Already Have An Account?
+          <a class="ml-3 btn" href="{% url 'login' %}">Sign In</a>
         </div>
       </div>
       <div
-      class="cta-img-box"
-      role="img"
+        class="cta-img-box"
+        role="img"
         aria-label="Woman enjoying food"
       ></div>
     </div>
   </div>
 </section>
 {% endblock content%}
-
-<form method="POST">
-  {% csrf_token %}
-  <fieldset class="form-group">
-    <legend class="border-bottom mb-4">Join Today</legend>
-    {{ form|crispy }}
-  </fieldset>
-  <div class="form-group">
-    <button class="btn btn-outline-info" type="submit">Sign Up</button>
-  </div>
-</form>

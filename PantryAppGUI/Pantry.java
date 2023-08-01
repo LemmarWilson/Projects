@@ -3,6 +3,7 @@ import java.util.Map;
 
 public class Pantry {
     // Fields
+    //private
     private HashMap<String, Integer> itemsMap;
 
 

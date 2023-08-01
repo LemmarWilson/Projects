@@ -1,0 +1,137 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class MemoryGame extends JFrame {
+    int score = 0;
+    JPanel mainContents = new JPanel();
+    JPanel buttonPanel = new JPanel();
+    JLabel mainLabel = new JLabel("Welcome new player. Your current score is: " + score);
+    final int rows = 3;
+    final int columns = 4;
+    final int totalRounds = (rows * columns) / 2;
+    List<JButton> buttons = new ArrayList<>();
+    List<Color> colors = new ArrayList<>();
+    JButton lastClickedButton = null;
+    int totalMatched = 0;
+
+    public MemoryGame() {
+        super("Memory Game");
+
+        add(mainContents);
+        mainContents.setLayout(new BorderLayout());
+        mainContents.add(mainLabel, BorderLayout.NORTH);
+        mainContents.add(buttonPanel, BorderLayout.CENTER);
+
+        mainContents.setVisible(true);
+
+        GridLayout glout = new GridLayout(rows, columns);
+        buttonPanel.setLayout(glout);
+
+        setCrossPlatformLook();
+
+        // Add buttons and set action listener
+        for (int i = 0; i < rows * columns; i++) {
+            JButton btn = new JButton();
+            btn.addActionListener(e -> ButtonClicked(e));
+            buttons.add(btn);
+            buttonPanel.add(btn);
+        }
+
+        InitColors();
+        setButtonNames(); // Set button names
+
+        setSize(700, 700);
+        setVisible(true);
+        setResizable(false);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
+    public void InitColors() {
+        // Set the colors
+        colors.add(Color.BLACK);
+        colors.add(Color.BLACK);
+        colors.add(Color.RED);
+        colors.add(Color.RED);
+        colors.add(Color.MAGENTA);
+        colors.add(Color.MAGENTA);
+        colors.add(Color.CYAN);
+        colors.add(Color.CYAN);
+        colors.add(Color.YELLOW);
+        colors.add(Color.YELLOW);
+        colors.add(Color.PINK);
+        colors.add(Color.PINK);
+
+        // Randomize the colors by shuffling the list
+        Collections.shuffle(colors);
+    }
+
+    public void ButtonClicked(ActionEvent e) {
+        Object btnObj = e.getSource();
+        int index = buttons.indexOf(btnObj);
+        JButton currentBtn = buttons.get(index);
+        currentBtn.setBackground(colors.get(index));
+
+        if (lastClickedButton == null) { // First button click
+            lastClickedButton = currentBtn;
+        } else { // Second button click
+            boolean isMatch = IsColorMatch(lastClickedButton, currentBtn);
+
+            if (isMatch) {
+                currentBtn.setEnabled(false);
+                lastClickedButton.setEnabled(false);
+                score += 10;
+                totalMatched++;
+
+                mainLabel.setText("Welcome new player. Your current score is: " + score);
+
+                if (totalMatched == totalRounds) {
+                    JOptionPane.showMessageDialog(this, "You've won! The total score is  " + score);
+                }
+            } else {
+                if (score > 0) {
+                    score -= 1;
+                }
+                JOptionPane.showMessageDialog(this, "The two colors did not match. Your score is " + score);
+                mainLabel.setText("Welcome new player. Your current score is: " + score);
+
+                currentBtn.setEnabled(true);
+                lastClickedButton.setEnabled(true);
+                currentBtn.setBackground(null);
+                lastClickedButton.setBackground(null);
+            }
+
+            lastClickedButton = null;
+        }
+    }
+
+    private boolean IsColorMatch(JButton lastClickedButton, JButton currentButton) {
+        int index1 = buttons.indexOf(lastClickedButton);
+        int index2 = buttons.indexOf(currentButton);
+        return colors.get(index1).equals(colors.get(index2));
+    }
+
+    public void setButtonNames() {
+        String[] buttonNames = {"Button 1", "Button 2", "Button 3", "Button 4",
+                                "Button 5", "Button 6", "Button 7", "Button 8",
+                                "Button 9", "Button 10", "Button 11", "Button 12"};
+
+        // Set button names
+        for (int i = 0; i < rows * columns; i++) {
+            buttons.get(i).setText(buttonNames[i]);
+        }
+    }
+
+    
+
+    public void setCrossPlatformLook() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

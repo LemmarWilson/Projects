@@ -1,22 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.awt.event.*;
+import java.util.*;
 
 public class MemoryGame extends JFrame {
-    int score = 0;
-    JPanel mainContents = new JPanel();
-    JPanel buttonPanel = new JPanel();
-    JLabel mainLabel = new JLabel("Welcome new player. Your current score is: " + score);
-    final int rows = 3;
-    final int columns = 4;
-    final int totalRounds = (rows * columns) / 2;
-    List<JButton> buttons = new ArrayList<>();
-    List<Color> colors = new ArrayList<>();
-    JButton lastClickedButton = null;
-    int totalMatched = 0;
+    private int score = 0;
+    private JPanel mainContents = new JPanel();
+    private JPanel buttonPanel = new JPanel();
+    private JLabel mainLabel = new JLabel("Welcome new player. Your current score is: " + score);
+    private final int rows = 3;
+    private final int columns = 4;
+    private final int totalRounds = (rows * columns) / 2;
+    private ArrayList<JButton> buttons = new ArrayList<>();
+    private ArrayList<Color> colors = new ArrayList<>();
+    private JButton lastClickedButton = null;
+    private int totalMatched = 0;
+    private Set<Integer> matchedIndices = new HashSet<>(); // To store the indices of matched buttons
 
     public MemoryGame() {
         super("Memory Game");
@@ -32,6 +31,40 @@ public class MemoryGame extends JFrame {
         buttonPanel.setLayout(glout);
 
         setCrossPlatformLook();
+
+        // Create the menu bar
+        JMenuBar menuBar = new JMenuBar();
+
+        // Create the "Game" menu
+        JMenu gameMenu = new JMenu("File");
+
+        // Create the "Reset" menu item
+        JMenuItem resetMenuItem = new JMenuItem("Reset");
+        resetMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resetGame(); // Call the method to reset the game
+            }
+        });
+
+        // Create the "Exit" menu item
+        JMenuItem exitMenuItem = new JMenuItem("Exit");
+        exitMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0); // Exit the application when "Exit" is clicked
+            }
+        });
+
+        // Add the menu items to the "Game" menu
+        gameMenu.add(resetMenuItem);
+        gameMenu.add(exitMenuItem);
+
+        // Add the "Game" menu to the menu bar
+        menuBar.add(gameMenu);
+
+        // Set the menu bar for the JFrame
+        setJMenuBar(menuBar);
 
         // Add buttons and set action listener
         for (int i = 0; i < rows * columns; i++) {
@@ -125,7 +158,24 @@ public class MemoryGame extends JFrame {
         }
     }
 
-    
+    // Method to reset the game
+    private void resetGame() {
+        // Clear the matchedIndices set
+        matchedIndices.clear();
+
+        // Reset backgrounds and enable all buttons
+        for (JButton button : buttons) {
+            button.setBackground(null);
+            button.setEnabled(true);
+        }
+
+        // Reset score and total matched variables
+        score = 0;
+        totalMatched = 0;
+
+        // Update the main label with the reset score
+        mainLabel.setText("Welcome new player. Your current score is: " + score);
+    }
 
     public void setCrossPlatformLook() {
         try {

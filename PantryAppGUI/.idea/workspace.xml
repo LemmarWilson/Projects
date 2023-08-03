@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec53e6cb-8b8b-4ad0-b313-6c73118cbc5f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Memory Game/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Memory Game/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Memory Game/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Memory Game/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Memory Game/Memory Game.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Memory Game/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Memory Game/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Memory Game/MemoryGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Memory Game/MemoryGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +30,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "testing",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/lemmarwilson/Documents/GitHub/Projects/PantryAppGUI",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -42,6 +48,7 @@
       <option name="presentableId" value="Default" />
       <updated>1690778452716</updated>
       <workItem from="1690778453680" duration="1245000" />
+      <workItem from="1691008475299" duration="2000" />
     </task>
     <servers />
   </component>

@@ -31,10 +31,56 @@ public class PuzzleGame extends JFrame {
 
         // Creating a new instance of the panel
         mainPanel = new JPanel();
+        this.add(mainPanel);
+
+       
+        init();
+
+        // Setting up the window
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setSize(WIDTH, HEIGHT);
+
+        // Create the menu bar and menu items
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        // Create the "File" menu
+        JMenu fileMenu = new JMenu("File");
+        menuBar.add(fileMenu);
+
+        // Add the "Open" menu item and register the ActionListener to handle the file selection
+        JMenuItem openMenuItem = new JMenuItem("Open");
+        fileMenu.add(openMenuItem);
+        openMenuItem.addActionListener(e -> openImage());
+
+        // Create the "View Solution" menu item and add ActionListener to show the solution
+        JMenuItem viewSolutionMenuItem = new JMenuItem("View Solution");
+        fileMenu.add(viewSolutionMenuItem);
+        viewSolutionMenuItem.addActionListener(e -> showSolution());
+
+        // Create the "Edit" menu
+        JMenu editMenu = new JMenu("Edit");
+        menuBar.add(editMenu);
+
+        // Create the "Reshuffle" menu item and add ActionListener to reshuffle the puzzle
+        JMenuItem reshuffleMenuItem = new JMenuItem("Reshuffle");
+        editMenu.add(reshuffleMenuItem);
+        reshuffleMenuItem.addActionListener(e -> reshuffle());
+
+        // Create the "Change Rows/Columns" menu item and add ActionListener to change puzzle size
+        JMenuItem changeSizeMenuItem = new JMenuItem("Change Rows/Columns");
+        editMenu.add(changeSizeMenuItem);
+        changeSizeMenuItem.addActionListener(e -> changePuzzleSize());
+    }
+    private void init() {
+       
         // Creating the layout for the panel
         mainPanel.setLayout(new GridLayout(ROWS, COLUMNS));
         // Adding the main panel to JFrame
-        add(mainPanel);
+ 
+     
         // Adding the label to the frame
         add(mainLabel, BorderLayout.NORTH);
 
@@ -95,40 +141,40 @@ public class PuzzleGame extends JFrame {
         for (var btn : buttons) {
             mainPanel.add(btn);
         }
-
-        // Setting up the window
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setVisible(true);
-        setSize(WIDTH, HEIGHT);
-
-        // Create the menu bar and menu items
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
-
-        // Create the "File" menu
-        JMenu fileMenu = new JMenu("File");
-        menuBar.add(fileMenu);
-
-        // Add the "Open" menu item and register the ActionListener to handle the file selection
-        JMenuItem openMenuItem = new JMenuItem("Open");
-        fileMenu.add(openMenuItem);
-        openMenuItem.addActionListener(e -> openImage());
-
-        // Create the "View Solution" menu item and add ActionListener to show the solution
-        JMenuItem viewSolutionMenuItem = new JMenuItem("View Solution");
-        fileMenu.add(viewSolutionMenuItem);
-        viewSolutionMenuItem.addActionListener(e -> showSolution());
-
-        // Create the "Edit" menu
-        JMenu editMenu = new JMenu("Edit");
-        menuBar.add(editMenu);
-
-        // Create the "Reshuffle" menu item and add ActionListener to reshuffle the puzzle
-        JMenuItem reshuffleMenuItem = new JMenuItem("Reshuffle");
-        editMenu.add(reshuffleMenuItem);
-        reshuffleMenuItem.addActionListener(e -> reshuffle());
     }
+    // Method to change the number of rows and columns
+    private void changePuzzleSize() {
+        // Prompt the user to input the number of rows and columns
+        String rowsInput = JOptionPane.showInputDialog(this, "Enter number of rows:");
+        String columnsInput = JOptionPane.showInputDialog(this, "Enter number of columns:");
+
+        try {
+            // Parse the input strings as integers
+            int newRows = Integer.parseInt(rowsInput);
+            int newColumns = Integer.parseInt(columnsInput);
+
+            // Check if the entered values are positive
+            if (newRows > 0 && newColumns > 0) {
+                // Update the number of rows and columns
+                ROWS = newRows;
+                COLUMNS = newColumns;
+
+                // Set the new grid layout for the main panel
+                //mainPanel.setLayout(new GridLayout(ROWS, COLUMNS));
+
+                // Reshuffle the puzzle with the new grid layout
+                init();
+                reshuffle();
+            } else {
+                // Display a message if the entered values are not valid
+                JOptionPane.showMessageDialog(this, "Please enter valid positive integers for rows and columns.");
+            }
+        } catch (NumberFormatException ex) {
+            // Display an error message if the input cannot be parsed as integers
+            JOptionPane.showMessageDialog(this, "Invalid input. Please enter valid positive integers.");
+        }
+    }
+
 
     // Button Handler
     private void ButtonClickEventHandler(ActionEvent e) {
@@ -158,10 +204,13 @@ public class PuzzleGame extends JFrame {
         // Check if clicked button is adjacent (same row + adjacent column, or same column and adjacent row)
         if ((row == rowEmpty && Math.abs(col - colEmpty) == 1) ||
                 (col == colEmpty && Math.abs(row - rowEmpty) == 1)) {
+            // Swap the positions of the clicked button and the empty button
             Collections.swap(buttons, i, isEmpty);
+            // Update the button display on the panel
             updateButton();
-            // Increase the player's score by 1 for each swap
+            // Increase the player's score by 1 for each successful swap
             score += 1;
+            // Update the score label
             mainLabel.setText("Your current score is: " + score);
         }
         // Check for the solution
@@ -171,9 +220,10 @@ public class PuzzleGame extends JFrame {
         }
     }
 
+
     // Method to load image from file
     private BufferedImage loadImage() throws IOException {
-        return ImageIO.read(new File("src/pancakes.jpg"));
+        return ImageIO.read(new File("pancakes.jpg"));
     }
 
     // Method to load image from user selection
@@ -194,20 +244,31 @@ public class PuzzleGame extends JFrame {
         mainPanel.validate();
     }
 
-    // Method to load image from user selection
+
+    // Method to load and open an image selected by the user
     private void openImage() {
+        // Create a file chooser dialog
         JFileChooser fileChooser = new JFileChooser();
+        // Show the dialog and get the user's selection
         int result = fileChooser.showOpenDialog(this);
 
+        // Check if the user has selected a file
         if (result == JFileChooser.APPROVE_OPTION) {
+            // Get the selected file
             File selectedFile = fileChooser.getSelectedFile();
             try {
+                // Load the image from the selected file
                 imageSource = loadImage(selectedFile);
+                // Get the width and height of the loaded image
                 int sourceWidth = imageSource.getWidth();
                 int sourceHeight = imageSource.getHeight();
+                // Calculate the new height to maintain the aspect ratio based on the given width
                 HEIGHT = (int) ((double) sourceHeight / sourceWidth * WIDTH);
+               
+                // Create a new resized image using Graphics2D
                 resizedImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
                 var graphics = resizedImage.createGraphics();
+                // Draw the loaded image onto the resized image
                 graphics.drawImage(imageSource, 0, 0, WIDTH, HEIGHT, null);
                 graphics.dispose();
 
@@ -220,45 +281,64 @@ public class PuzzleGame extends JFrame {
         }
     }
 
+
     // Method to create a copy of the current buttons as a solution
     private List<FancyButton> createButtonSolutionCopy() {
+        // Create a new list to hold the copied buttons
         List<FancyButton> copy = new ArrayList<>();
+        // Iterate through the original buttons list and create copies of each button
         for (FancyButton btn : buttons) {
+            // Create a copy of the button and add it to the new list
             copy.add(new FancyButton(btn));
         }
+        // Return the list of copied buttons
         return copy;
     }
 
     // Method to rebuild the buttons based on the new image
     public void rebuildButtons() {
+        // Remove all buttons from the main panel
         mainPanel.removeAll();
-        // Create a temporary copy
+        // Create a temporary copy of the buttons list
         List<FancyButton> tempButtons = new ArrayList<>(buttons);
-        // Clear the original list
+        // Clear the original buttons list
         buttons.clear();
         // Create a new button solution copy
         buttonSolution = createButtonSolutionCopy();
+        // Iterate through the grid of rows and columns
         for (int i = 0; i < COLUMNS * ROWS; i++) {
             int row = i / COLUMNS, col = i % COLUMNS;
+            // Create a slice of the resized image for the current button
             Image imageSlice = createImage(new FilteredImageSource(resizedImage.getSource(),
                     new CropImageFilter(col * WIDTH / COLUMNS, row * HEIGHT / ROWS, WIDTH / COLUMNS, HEIGHT / ROWS)));
+            // Create a new button instance
             FancyButton btn = new FancyButton();
+            // Check if it's the last button (empty space)
             if (i == COLUMNS * ROWS - 1) {
+                // Hide border and content area for the last button
                 btn.setBorderPainted(false);
                 btn.setContentAreaFilled(false);
             } else {
+                // Set the image slice as the icon for the button
                 btn.setIcon(new ImageIcon(imageSlice));
             }
+            // Add the button to the buttons list
             buttons.add(btn);
+            // Set a gray border for the button
             btn.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+            // Attach an ActionListener to the button
             btn.addActionListener(e -> ButtonClickEventHandler(e));
         }
+        // Shuffle the order of the buttons
         Collections.shuffle(buttons);
+        // Add the shuffled buttons back to the main panel
         for (var btn : buttons) {
             mainPanel.add(btn);
         }
+        // Validate the main panel to reflect the changes
         mainPanel.validate();
     }
+
 
     // Method to show the solved image in a pop-up window
     private void showSolution() {
@@ -287,7 +367,9 @@ public class PuzzleGame extends JFrame {
 
     // Method to show the game over dialog
     private void showGameOverDialog() {
+        // Options for the dialog
         Object[] options = { "Replay", "Next Level", "Exit" };
+        // Show the option dialog to the player
         int choice = JOptionPane.showOptionDialog(
                 this,
                 "Congratulations! You completed the level. What do you want to do next?",
@@ -298,18 +380,17 @@ public class PuzzleGame extends JFrame {
                 options,
                 options[0]);
 
+        // Check the player's choice from the dialog
         if (choice == JOptionPane.YES_OPTION) {
             // Replay the current level
             reshuffle();
         } else if (choice == JOptionPane.NO_OPTION) {
             // Proceed to the next level (if you have multiple levels)
-            reshuffle(); // TODO implement new level
-        } else if (choice == JOptionPane.CANCEL_OPTION || choice == JOptionPane.CLOSED_OPTION)
-
-        {
+            reshuffle(); // TODO: Implement new level
+        } else if (choice == JOptionPane.CANCEL_OPTION || choice == JOptionPane.CLOSED_OPTION) {
             // Exit the game
             System.exit(0);
         }
     }
-}
 
+}

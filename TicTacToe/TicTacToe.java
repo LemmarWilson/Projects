@@ -1,3 +1,9 @@
+/**
+ ========================================================================================
+ Lemmar Wilson & Karman Howard
+ CSC205 TicTacToe
+ ========================================================================================
+ */
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -17,8 +23,30 @@ public class TicTacToe  extends JFrame{
     private JMenuItem exit = new JMenuItem("Exit"); //this will hold the exit menu item
     private JMenuItem about = new JMenuItem("About"); //this will hold the about menu item
 
+    //***************** CSC205 HOMEWORK **************************
+    private int playerXWins = 0; // Counter for Player X wins
+    private int playerOWins = 0; // Counter for Player O wins
+    private int totalGames = 0; // Counter for total games played
+    //***************** END HOMEWORK *****************************
 
-    //methods
+
+    //Methods
+
+    //******************* CSC205 HOMEWORK ***************************
+    // New method to check for a tie
+    public boolean CheckForTie() {
+        for (int i = 0; i < 9; i++) {
+            if (buttons[i].isEnabled()) {
+                return false; // There are still available moves, not a tie
+            }
+        }
+        return true; // All buttons are disabled, it's a tie
+    }
+    //********************END HOMEWORK *************************
+
+
+
+
     public void SwitchPlayer() {
         currentPlayer = currentPlayer.equals("X")? "O" : "X"; //switching the
                     
@@ -26,24 +54,32 @@ public class TicTacToe  extends JFrame{
 
     //click event handler
     public void ButtonClickHandler(ActionEvent e) {
-        JButton clickedButton = (JButton) e.getSource(); //getting the button that was clicked
-        clickedButton.setEnabled(false); //disabling the button
-        clickedButton.setText(currentPlayer); //changing the text of the button to the current player
-        currentPlayer = clickedButton.getText(); //getting the text of the button that was clicked
+        JButton clickedButton = (JButton) e.getSource(); // Getting the button that was clicked
+        clickedButton.setEnabled(false); // Disabling the button
+        clickedButton.setText(currentPlayer); // Changing the text of the button to the current player
+        currentPlayer = clickedButton.getText(); // Getting the text of the button that was clicked
 
-        //set background color
-        clickedButton.setOpaque(true); //making the button opaque
-        clickedButton.setBackground(currentPlayer.equals("X")? Color.MAGENTA : Color.CYAN); //changing the background color of button
+        // Set background color
+        clickedButton.setOpaque(true); // Making the button opaque
+        clickedButton.setBackground(currentPlayer.equals("X") ? Color.MAGENTA : Color.CYAN); // Changing the background color of button
 
-        if(CheckForWinner()){//checking for a winner
+        if (CheckForWinner()) { // Checking for a winner
             JOptionPane.showMessageDialog(this, "Player " + currentPlayer + " has won!");
-            resetGame(); //resetting the game
-            exitgame(); //exiting the game
+            if (currentPlayer.equals("X")) {
+                playerXWins++;
+            } else {
+                playerOWins++;
+            }
+
+            resetGame(); // Resetting the game
+            return; // Return after resetting the game to avoid switching player again
         }
 
-        SwitchPlayer(); //switching the player
+        // Switching the player
+        SwitchPlayer();
     }
-    
+
+
     public boolean CheckForWinner() {
         // Check for win in rows
         for (int i = 0; i <= 6; i += 3) {
@@ -75,13 +111,21 @@ public class TicTacToe  extends JFrame{
             && buttons[2].getText().equals(buttons[6].getText())) {
             return true;
         }
+        //*************** CSC205 HOMEWORK *********************************************
+        //check for tie
+        if (CheckForTie()) {
+            JOptionPane.showMessageDialog(this, "It's a tie!");
+            resetGame();
+            return false;
+        }
+        //*************** END HOMEWORK *********************************************
         return false;
     }
-    
+
     public void resetGame() {
         // Show a confirmation dialog to the user asking if they want to reset the game
         int option = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset the game?", "Reset Game", JOptionPane.YES_NO_OPTION);
-        
+
         // Check if the user selected "Yes" in the confirmation dialog
         if (option == JOptionPane.YES_OPTION) {
             // Iterate through all components on the form's content pane
@@ -90,23 +134,40 @@ public class TicTacToe  extends JFrame{
                 if (component instanceof JButton) {
                     // Cast the component to JButton since we know it's a button
                     JButton button = (JButton) component;
-    
+
                     // Enable the button to allow clicks on it
                     button.setEnabled(true);
-    
+
                     // Reset the text of the button to an empty string, effectively clearing it
                     button.setText("");
-    
+
                     // Set the button's background color to null to remove any custom background color
                     button.setBackground(null); // Reset the background color
                 }
             }
-            
+
             // Reset the currentPlayer to "X" to start the game with the "X" player
             currentPlayer = "X";
+
+            // Check for winner and update win counts
+            if (CheckForWinner()) {
+                if (currentPlayer.equals("X")) {
+                    playerXWins++;
+                } else {
+                    playerOWins++;
+                }
+            }
+
+            totalGames++; // Increment total games played
+
+            // Display player wins and total games played
+            JOptionPane.showMessageDialog(this, "Player X wins: " + playerXWins +
+                    "\nPlayer O wins: " + playerOWins +
+                    "\nTotal games played: " + totalGames);
         }
         // If the user selected "No" in the confirmation dialog, the game will not be reset
     }
+
 
     public void exitgame() {
         // Show a confirmation dialog to the user asking if they want to exit the game

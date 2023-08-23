@@ -4,33 +4,33 @@ import java.awt.event.*;
 import java.util.*;
 
 public class MemoryGame extends JFrame {
-    private int score = 0;
-    private JPanel mainContents = new JPanel();
-    private JPanel buttonPanel = new JPanel();
-    private JLabel mainLabel = new JLabel("Welcome new player. Your current score is: " + score);
-    private final int rows = 3;
-    private final int columns = 4;
-    private final int totalRounds = (rows * columns) / 2;
-    private ArrayList<JButton> buttons = new ArrayList<>();
-    private ArrayList<Color> colors = new ArrayList<>();
-    private JButton lastClickedButton = null;
-    private int totalMatched = 0;
-    private Set<Integer> matchedIndices = new HashSet<>(); // To store the indices of matched buttons
+    private int score = 0; // Initialize score
+    private JPanel mainContents = new JPanel(); // Create a panel for main contents
+    private JPanel buttonPanel = new JPanel(); // Create a panel for buttons
+    private JLabel mainLabel = new JLabel("Welcome new player. Your current score is: " + score); // Create a label with initial score
+    private final int rows = 3; // Specify number of rows in the grid
+    private final int columns = 4; // Specify number of columns in the grid
+    private final int totalRounds = (rows * columns) / 2; // Calculate total number of rounds
+    private ArrayList<JButton> buttons = new ArrayList<>(); // Create a list to store buttons
+    private ArrayList<Color> colors = new ArrayList<>(); // Create a list to store colors
+    private JButton lastClickedButton = null; // Initialize last clicked button as null
+    private int totalMatched = 0; // Initialize total matched count
+    private Set<Integer> matchedIndices = new HashSet<>(); // Create a set to store matched button indices
 
     public MemoryGame() {
-        super("Memory Game");
+        super("Memory Game"); // Set frame title
 
-        add(mainContents);
-        mainContents.setLayout(new BorderLayout());
-        mainContents.add(mainLabel, BorderLayout.NORTH);
-        mainContents.add(buttonPanel, BorderLayout.CENTER);
+        add(mainContents); // Add mainContents panel to the frame
+        mainContents.setLayout(new BorderLayout()); // Set layout for mainContents
+        mainContents.add(mainLabel, BorderLayout.NORTH); // Add label to the top of mainContents
+        mainContents.add(buttonPanel, BorderLayout.CENTER); // Add buttonPanel to the center of mainContents
 
-        mainContents.setVisible(true);
+        mainContents.setVisible(true); // Make mainContents panel visible
 
-        GridLayout glout = new GridLayout(rows, columns);
-        buttonPanel.setLayout(glout);
+        GridLayout glout = new GridLayout(rows, columns); // Create a grid layout for buttonPanel
+        buttonPanel.setLayout(glout); // Set layout for buttonPanel
 
-        setCrossPlatformLook();
+        setCrossPlatformLook(); // Set cross-platform look and feel
 
         // Create the menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -69,18 +69,18 @@ public class MemoryGame extends JFrame {
         // Add buttons and set action listener
         for (int i = 0; i < rows * columns; i++) {
             JButton btn = new JButton();
-            btn.addActionListener(e -> ButtonClicked(e));
-            buttons.add(btn);
-            buttonPanel.add(btn);
+            btn.addActionListener(e -> ButtonClicked(e)); // Add action listener to buttons
+            buttons.add(btn); // Add button to the list
+            buttonPanel.add(btn); // Add button to the buttonPanel
         }
 
-        InitColors();
+        InitColors(); // Initialize the colors
         setButtonNames(); // Set button names
 
-        setSize(700, 700);
-        setVisible(true);
-        setResizable(false);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setSize(700, 700); // Set frame size
+        setVisible(true); // Make the frame visible
+        setResizable(false); // Disable frame resizing
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Set default close operation
     }
 
     public void InitColors() {
@@ -103,14 +103,14 @@ public class MemoryGame extends JFrame {
     }
 
     public void ButtonClicked(ActionEvent e) {
-        Object btnObj = e.getSource();
-        int index = buttons.indexOf(btnObj);
-        JButton currentBtn = buttons.get(index);
-        currentBtn.setBackground(colors.get(index));
+        Object btnObj = e.getSource(); // Get the source of the action event
+        int index = buttons.indexOf(btnObj); // Get the index of the clicked button
+        JButton currentBtn = buttons.get(index); // Get the clicked button
+        currentBtn.setBackground(colors.get(index)); // Set the background color
 
-        if (lastClickedButton == null) { // First button click
+        if (lastClickedButton == null) { // Check for first button click
             lastClickedButton = currentBtn;
-        } else { // Second button click
+        } else { // Check for second button click
             boolean isMatch = IsColorMatch(lastClickedButton, currentBtn);
 
             if (isMatch) {
@@ -142,9 +142,9 @@ public class MemoryGame extends JFrame {
     }
 
     private boolean IsColorMatch(JButton lastClickedButton, JButton currentButton) {
-        int index1 = buttons.indexOf(lastClickedButton);
-        int index2 = buttons.indexOf(currentButton);
-        return colors.get(index1).equals(colors.get(index2));
+        int index1 = buttons.indexOf(lastClickedButton); // Get index of last clicked button
+        int index2 = buttons.indexOf(currentButton); // Get index of current clicked button
+        return colors.get(index1).equals(colors.get(index2)); // Compare colors
     }
 
     public void setButtonNames() {

@@ -1,0 +1,34 @@
+{% extends 'accounts/base.html' %}
+{% block content %}
+    <h2>Welcome to your Dashboard, {{ user.get_full_name }}!</h2>
+    <h3>Debug User Information:</h3>
+
+    {% if user.role == 'ADMIN' %}
+        {% with profile=user.adminuserprofile %}
+            <p><strong>Profile:</strong> {{ profile }}</p>
+            <h3>Your Profile Information:</h3>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            <p><strong>Bio:</strong> {{ profile.bio }}</p>
+            <p><strong>Age:</strong> {{ profile.age }}</p>
+        {% endwith %}
+    {% elif user.role == 'USER' %}
+        {% with profile=user.reguserprofile %}
+            <p><strong>Profile:</strong> {{ profile }}</p>
+            <h3>Your Profile Information:</h3>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>First Name:</strong> {{ user.first_name }}</p>
+            <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+            <p><strong>Bio:</strong> {{ profile.bio }}</p>
+            <p><strong>Height:</strong> {{ profile.height }}</p>
+        {% endwith %}
+    {% else %}
+        <p>No specific profile information available.</p>
+    {% endif %}
+
+    <p><a href="{% url 'logout' %}">Logout</a></p>
+{% endblock %}
+
+
+

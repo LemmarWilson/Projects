@@ -1,0 +1,39 @@
+# Game Constants
+FPS = 60  # Frames per second
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+BUTTON_SCALE = 1
+
+# Character Constants
+SCALE = 3
+SPEED = 5
+OFFSET = 12
+ENEMY_SPEED = 4
+ENEMY_RANGE = 50
+ATTACK_RANGE = 60
+
+# Weapon Constants
+WEAPON_SCALE = 1.5
+ARROW_SPEED = 10
+FIREBALL_SCALE = 1
+FIREBALL_SPEED = 3
+
+# Item Constants
+ITEM_SCALE = 3
+POTION_SCALE = 2
+
+# Colors
+WHITE = (255, 255, 255)
+PANEL = (50, 50, 50)
+BG = (40, 25, 25)  # Background color
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+BLACK = (0, 0, 0)
+MENU_BG = (130, 0, 0)
+
+# Tile Constants
+TILE_SIZE = 16 * SCALE
+TILE_TYPES = 18
+TILE_ROWS = 150
+TILE_COLS = 150
+SCROLL_THRESHOLD = 200

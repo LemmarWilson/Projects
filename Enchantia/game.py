@@ -20,13 +20,11 @@ from button import Button
 def handle_events(moving_left, moving_right, moving_up, moving_down):
     """
     Handle keyboard events for player movement.
-
     Args:
         Moving_left (bool): Current state of moving left.
         Moving_right (bool): Current state of moving right.
         Moving_up (bool): Current state of moving up.
         Moving_down (bool): Current state of moving down.
-
     Returns:
         Tuple[bool]: Updated states of moving_left, moving_right, moving_up, moving_down.
         :param moving_down:
@@ -140,10 +138,8 @@ def draw_text(text, font, text_color, x, y, screen):
 def load_character_animation_list(num_frames=4):
     """
     Load the animation list for characters.
-
     Args:
         num_frames (int): Number of frames per animation (default is 4).
-
     Returns:
         List[List[List[pygame.Surface]]]: primary animation list.
     """
@@ -180,7 +176,6 @@ def load_character_animation_list(num_frames=4):
 def load_hearts(heart_type):
     """
     Load the heart image.
-
     Returns:
         pygame.Surface: The loaded heart image.
     """
@@ -193,10 +188,8 @@ def load_hearts(heart_type):
 def load_weapon(weapon_name):
     """
     Load the weapon images.
-
     Args:
         weapon_name (str): The name of the weapon.
-
     Returns:
         pygame.Surface: The loaded weapon image.
     """
@@ -290,11 +283,9 @@ def reset_level(damage_group, arrow_group, item_group, fireball_group):
 def scale_image(image, scale):
     """
     Scale the given image by the specified scale factor.
-
     Args:
         image (pygame.Surface): The image to be scaled.
         Scale (float): The scale factor.
-
     Returns:
         pygame.Surface: The scaled image.
         :param image:
@@ -339,7 +330,7 @@ def main():
 
     """
     Loading in sound effects
-    
+
     """
 
     # Load sounds
@@ -358,7 +349,7 @@ def main():
     heal_fx.set_volume(0.5)
 
     """
-    
+
     Load items in a list to generate in the game tiles
     """
     items_images_list = []
@@ -610,7 +601,7 @@ def main():
                         )
                         # Load level data
                         with open(
-                            f"levels/level{level}_data.csv", newline=""
+                                f"levels/level{level}_data.csv", newline=""
                         ) as csvfile:
                             reader = csv.reader(csvfile, delimiter=",")
                             for x, row in enumerate(reader):

@@ -4,7 +4,6 @@
 import os
 import pygame
 import button
-
 # import pickle
 import csv
 
@@ -19,11 +18,8 @@ SCREEN_HEIGHT = 640
 LOWER_MARGIN = 100
 SIDE_MARGIN = 400
 
-screen = pygame.display.set_mode(
-    (SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN)
-)
-pygame.display.set_caption("Level Editor")
-
+screen = pygame.display.set_mode((SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN))
+pygame.display.set_caption('Level Editor')
 
 # define game variables
 ROWS = 150
@@ -39,17 +35,21 @@ scroll_down = False
 scroll = [0, 0]
 scroll_speed = 1
 
-
 # store tiles in a list
 img_list = []
 for x in range(TILE_TYPES):
-    img = pygame.image.load(f"img/tile/dungeon/{x}.png").convert_alpha()
-    img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
-    img_list.append(img)
+    img_path = f'img/tile/dungeon/{x}.png'
+    try:
+        # print(f'Loading {img_path}...')  # Debug print
+        img = pygame.image.load(img_path).convert_alpha()
+        img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
+        img_list.append(img)
+    except pygame.error as e:
+        print(f'Failed to load {img_path}: {e}')  # This will print the error message
 
 
-save_img = pygame.image.load("img/save_btn.png").convert_alpha()
-load_img = pygame.image.load("img/load_btn.png").convert_alpha()
+save_img = pygame.image.load('img/save_btn.png').convert_alpha()
+load_img = pygame.image.load('img/load_btn.png').convert_alpha()
 
 # define colours
 BG = (35, 35, 35)
@@ -58,7 +58,7 @@ WHITE = (255, 255, 255)
 RED = (200, 25, 25)
 
 # define font
-font = pygame.font.SysFont("Futura", 30)
+font = pygame.font.SysFont('Futura', 30)
 
 # create empty tile list
 world_data = []
@@ -86,20 +86,10 @@ def draw_bg():
 def draw_grid():
     # vertical lines
     for c in range(COLS + 1):
-        pygame.draw.line(
-            screen,
-            WHITE,
-            (c * TILE_SIZE - scroll[0], 0),
-            (c * TILE_SIZE - scroll[0], SCREEN_HEIGHT),
-        )
+        pygame.draw.line(screen, WHITE, (c * TILE_SIZE - scroll[0], 0), (c * TILE_SIZE - scroll[0], SCREEN_HEIGHT))
     # horizontal lines
     for c in range(ROWS + 1):
-        pygame.draw.line(
-            screen,
-            WHITE,
-            (0, c * TILE_SIZE - scroll[1]),
-            (SCREEN_WIDTH, c * TILE_SIZE - scroll[1]),
-        )
+        pygame.draw.line(screen, WHITE, (0, c * TILE_SIZE - scroll[1]), (SCREEN_WIDTH, c * TILE_SIZE - scroll[1]))
 
 
 # function for drawing the world tiles
@@ -107,36 +97,27 @@ def draw_world():
     for y, row in enumerate(world_data):
         for x, tile in enumerate(row):
             if tile >= 0:
-                screen.blit(
-                    img_list[tile],
-                    (x * TILE_SIZE - scroll[0], y * TILE_SIZE - scroll[1]),
-                )
+                screen.blit(img_list[tile], (x * TILE_SIZE - scroll[0], y * TILE_SIZE - scroll[1]))
 
 
 # create buttons
-save_button = button.Button(
-    SCREEN_WIDTH // 2, SCREEN_HEIGHT + LOWER_MARGIN - 50, save_img, 1
-)
-load_button = button.Button(
-    SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT + LOWER_MARGIN - 50, load_img, 1
-)
+save_button = button.Button(SCREEN_WIDTH // 2, SCREEN_HEIGHT + LOWER_MARGIN - 50, save_img, 1)
+load_button = button.Button(SCREEN_WIDTH // 2 + 200, SCREEN_HEIGHT + LOWER_MARGIN - 50, load_img, 1)
 # make a button list
 button_list = []
 button_col = 0
 button_row = 0
 for i in range(len(img_list)):
-    tile_button = button.Button(
-        SCREEN_WIDTH + (50 * button_col) + 25, 50 * button_row + 25, img_list[i], 1
-    )
+    tile_button = button.Button(SCREEN_WIDTH + (50 * button_col) + 25, 50 * button_row + 25, img_list[i], 1)
     button_list.append(tile_button)
     button_col += 1
     if button_col == 7:
         button_col = 0
         button_row += 1
 
-
 run = True
 while run:
+
     clock.tick(FPS)
 
     draw_bg()
@@ -144,34 +125,18 @@ while run:
     draw_world()
 
     # draw bottom panel
-    pygame.draw.rect(
-        screen,
-        BG,
-        (0, SCREEN_HEIGHT, SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN),
-    )
+    pygame.draw.rect(screen, BG, (0, SCREEN_HEIGHT, SCREEN_WIDTH + SIDE_MARGIN, SCREEN_HEIGHT + LOWER_MARGIN))
 
-    draw_text(f"Level: {level}", font, WHITE, 10, SCREEN_HEIGHT + LOWER_MARGIN - 90)
-    draw_text(
-        "Press UP or DOWN to change level",
-        font,
-        WHITE,
-        10,
-        SCREEN_HEIGHT + LOWER_MARGIN - 60,
-    )
-    if os.path.exists(f"level{level}_data.csv"):
-        draw_text(
-            "File already exists, be careful when saving!",
-            font,
-            WHITE,
-            400,
-            SCREEN_HEIGHT + LOWER_MARGIN - 80,
-        )
+    draw_text(f'Level: {level}', font, WHITE, 10, SCREEN_HEIGHT + LOWER_MARGIN - 90)
+    draw_text('Press UP or DOWN to change level', font, WHITE, 10, SCREEN_HEIGHT + LOWER_MARGIN - 60)
+    if os.path.exists(f'level{level}_data.csv'):
+        draw_text('File already exists, be careful when saving!', font, WHITE, 400, SCREEN_HEIGHT + LOWER_MARGIN - 80)
 
     # save and load data
     if save_button.draw(screen):
         # save level data
-        with open(f"level{level}_data.csv", "w", newline="") as csvfile:
-            writer = csv.writer(csvfile, delimiter=",")
+        with open(f'level{level}_data.csv', 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile, delimiter=',')
             for row in world_data:
                 writer.writerow(row)
         # alternative using pickle
@@ -184,9 +149,9 @@ while run:
         # reset scroll back to the start of the level
         scroll = [0, 0]
         save_trigger = 0
-        if os.path.exists(f"level{level}_data.csv"):
-            with open(f"level{level}_data.csv", newline="") as csvfile:
-                reader = csv.reader(csvfile, delimiter=",")
+        if os.path.exists(f'level{level}_data.csv'):
+            with open(f'level{level}_data.csv', newline='') as csvfile:
+                reader = csv.reader(csvfile, delimiter=',')
                 for x, row in enumerate(reader):
                     for y, tile in enumerate(row):
                         world_data[x][y] = int(tile)

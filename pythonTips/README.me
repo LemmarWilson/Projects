@@ -1,0 +1,37 @@
+# Python Daily Tips Generator
+
+## Overview
+The Python Daily Tips Generator is a Python script that sends you a daily Python programming tip via SMS. It leverages the power of OpenAI's GPT-3 language model to generate insightful Python tips and Twilio or AWS SNS to deliver these tips to your phone.
+
+## Features
+- Generates a daily Python programming tip.
+- Supports a wide range of Python topics, including data structures, algorithms, modules, functions, error handling, object-oriented programming, data analysis, and more.
+- Tips are accompanied by illustrative examples.
+- Easily configurable with a spreadsheet containing topics and prompts.
+- Automatically sends tips at a specified time daily.
+
+## Getting Started
+Follow these steps to set up the Python Daily Tips Generator:
+
+1. Clone this repository to your local machine.
+2. Install the required Python packages using `pip install -r requirements.txt`.
+3. Configure your OpenAI API key.
+4. Create a spreadsheet (Excel or CSV) containing Python programming topics and prompts for generating tips. See the example spreadsheet for guidance.
+5. Update the script to point to your spreadsheet and configure the time for tip delivery.
+6. Set up a cron job to run the script at your preferred time daily.
+
+## Usage
+- Run the script to generate and send a daily Python tip.
+- Customize the topics and prompts in your spreadsheet to tailor the tips to your preferences.
+- Adjust the delivery time in the script according to your timezone.
+
+## Dependencies
+- Python 3.x
+- OpenAI GPT-3 API
+
+## Credits
+- [OpenAI](https://openai.com) for their GPT-3 language model.
+
+Feel free to contribute, report issues, or suggest improvements to make this project even better!
+
+Happy coding and enjoy your daily Python tips!

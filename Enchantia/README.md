@@ -17,6 +17,14 @@ Embark on a magical journey with Enchantia, a Python-based dungeon crawler game 
 - **Exclusive Boss Abilities**: Face the might of the Boss, the only character wielding the power of fireballs.
 - **Custom Level Creation**: Unleash your creativity with the included level editor to expand the Enchantia universe.
 
+## Screenshots
+### **Exploring the Dungeon**
+![Enchantia Gameplay](screenshots/gameplay1.png "Exploring the Dungeon")
+### **Engaging in Combat**
+![Enchantia Combat](screenshots/combat1.png "Engaging in Combat")
+### **Boss Encounter**
+![Enchantia Boss Fight](screenshots/bossfight1.png "Boss Encounter")
+
 ## Installation
 
 Clone the repository and navigate to the project directory:
@@ -48,18 +56,18 @@ python main.py
 
 ## Extending the Game
 
-- Use the level editor included in the `LevelEditor` directory to add your custom levels.
+Use the level editor included in the `LevelEditor` directory to add your custom levels.
 
 ## Dependencies
 
-- Listed in the `requirements.txt` file, includes Pygame and other necessary Python packages.
+Listed in the `requirements.txt` file, includes Pygame and other necessary Python packages.
 
 ## Contributing
 
-- Feel free to fork, add features, and send pull requests to enhance the Enchantia experience.
+Feel free to fork, add features, and send pull requests to enhance the Enchantia experience.
 
 ## License
 
-- Enchantia is released under the MIT License. See [LICENSE.md](LICENSE.md) for more details.
+Enchantia is released under the MIT License. See [LICENSE.md](LICENSE.md) for more details.
 
 ---

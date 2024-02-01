@@ -17,13 +17,11 @@ This project harnesses OpenAI's GPT-3 to automate the dissemination of Python pr
 
 ## Table of Contents
 - [Overview](#overview)
-- [Key Features](#features)
-- [Initial Setup](#getting-started)
-- [Operational Use](#usage)
-- [System Requirements](#dependencies)
-- [Acknowledgments](#credits)
-- [Community Contributions](#contributing)
-- [Intellectual Property](#license)
+- [Key Features](#key-features)
+- [Initial Setup](#initial-setup)
+- [Operational Use](#operational-use)
+- [System Requirements](#system-requirements)
+- [Intellectual Property](#intellectual-property)
 
 ## Key Features
 
